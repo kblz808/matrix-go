@@ -1,16 +1,16 @@
 default: build
 
 build:
-	go build main.go
+	go build .
 
 prod:
-	@go build -ldfflags "-s -w" main.go
+	@go build -ldfflags "-s -w" .
 
 run: build
-	./main
+	./matrix-go
 
 get:
 	go mod tidy
 
 clean:
-    rm main
+    rm matrix-go
