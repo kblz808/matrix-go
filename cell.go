@@ -29,7 +29,7 @@ func (c *Cell) change() {
 }
 
 func randomChar() rune {
-	runes := []rune{'#', '%', '$', '@', '+', '&', '?', ':', '*', '!', 'x', 'o', '^', '-'}
+	runes := []rune{'#', '%', '$', '@', '+', '&', '?', ':', '*', '!', 'o', '^', '-', '>'}
 	return runes[rand.Intn(len(runes))]
 }
 
