@@ -34,6 +34,8 @@ func main() {
 
 	font := rl.LoadFont("./assets/font.ttf")
 
+	shader := rl.LoadShader("", "./assets/shader.fs")
+
 	rect := rl.Rectangle{
 		X:      0.0,
 		Y:      0.0,
@@ -42,6 +44,8 @@ func main() {
 	}
 	opacity := uint8(45)
 	color := rl.NewColor(0, 0, 0, opacity)
+
+	target := rl.LoadRenderTexture(screen_width-spacing, screen_height)
 
 	for !rl.WindowShouldClose() {
 		rl.SetTargetFPS(fps)
@@ -63,6 +67,7 @@ func main() {
 		opacity = uint8(gui.Slider(rl.NewRectangle(panelRec.X+float32(gridSpacing), panelRec.Y+float32(gridSpacing*16)+panelScroll.Y, 150, 20), "", "alpha", float32(opacity), 10, 100))
 		rl.EndScissorMode()
 
+		rl.BeginTextureMode(target)
 		for _, cell := range cells {
 			rl.DrawTextEx(font, string(cell.char), rl.Vector2{X: float32(cell.xPos), Y: float32(cell.yPos)}, float32(size), 0, rl.LightGray)
 			rl.DrawTextEx(font, string(cell.prevChar), rl.Vector2{X: float32(cell.xPos), Y: float32(cell.yPos - int(cell.speed))}, float32(size), 0, color4)
@@ -72,6 +77,11 @@ func main() {
 		}
 
 		rl.DrawRectangleRounded(rect, 0, 0, color)
+		rl.EndTextureMode()
+
+		rl.BeginShaderMode(shader)
+		rl.DrawTextureRec(target.Texture, rl.NewRectangle(0, 0, float32(target.Texture.Width), float32(-target.Texture.Height)), rl.NewVector2(0, 0), rl.White)
+		rl.EndShaderMode()
 
 		rl.EndDrawing()
 	}
