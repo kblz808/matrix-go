@@ -4,6 +4,8 @@ import (
 	"math/rand"
 )
 
+const MAX_SPEED = 4
+
 type Cell struct {
 	char     rune
 	prevChar rune
@@ -29,7 +31,7 @@ func (c *Cell) change() {
 }
 
 func randomChar() rune {
-	runes := []rune{'#', '%', '$', '@', '+', '&', '?', ':', '*', '!', 'x', 'o', '^', '-'}
+	runes := []rune{'#', '%', '$', '@', '+', '&', '?', ':', '*', '!', 'o', '^', '-', '>'}
 	return runes[rand.Intn(len(runes))]
 }
 
@@ -41,7 +43,7 @@ func InitCells() []*Cell {
 			prevChar: '0',
 			xPos:     i * size,
 			yPos:     rand.Intn(screen_height),
-			speed:    uint8(rand.Intn(4) + 1*size),
+			speed:    uint8(rand.Intn(MAX_SPEED) + 1*size),
 		})
 	}
 	return cells
