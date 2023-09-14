@@ -8,12 +8,11 @@ uniform vec4 colDiffuse;
 
 out vec4 finalColor;
 
-const vec2 size = vec2(800, 450);
-const float samples = 4.0;
-const float quality = 2.5;
+const vec2 size = vec2(1000, 600);
+uniform float samples;
+uniform float quality = 2.5;
 
-void main()
-{
+void main(){
     vec4 sum = vec4(0);
     vec2 sizeFactor = vec2(1)/size*quality;
 
