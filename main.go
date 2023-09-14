@@ -8,7 +8,7 @@ import (
 const spacing = 220
 const screen_width = 1000 + spacing
 const screen_height = 600
-const size = 10
+const size = 12
 
 var fps = int32(24)
 
@@ -47,7 +47,13 @@ func main() {
 
 	target := rl.LoadRenderTexture(screen_width-spacing, screen_height)
 
+	samples := []float32{4.0}
+	quality := []float32{2.5}
+
 	for !rl.WindowShouldClose() {
+		rl.SetShaderValue(shader, rl.GetShaderLocation(shader, "samples"), samples, rl.ShaderUniformDataType(rl.RL_SHADER_UNIFORM_FLOAT))
+		rl.SetShaderValue(shader, rl.GetShaderLocation(shader, "quality"), quality, rl.ShaderUniformDataType(rl.RL_SHADER_UNIFORM_FLOAT))
+
 		rl.SetTargetFPS(fps)
 		color.A = opacity
 
@@ -65,6 +71,9 @@ func main() {
 		color4 = gui.ColorPicker(rl.NewRectangle(panelRec.X+float32(gridSpacing), panelRec.Y+float32(gridSpacing*3)+panelScroll.Y, float32(gridSpacing*9), float32(gridSpacing*9)), "color", color4)
 		fps = int32(gui.Slider(rl.NewRectangle(panelRec.X+float32(gridSpacing), panelRec.Y+float32(gridSpacing*14)+panelScroll.Y, 150, 20), "", "fps", float32(fps), 18, 64))
 		opacity = uint8(gui.Slider(rl.NewRectangle(panelRec.X+float32(gridSpacing), panelRec.Y+float32(gridSpacing*16)+panelScroll.Y, 150, 20), "", "alpha", float32(opacity), 10, 100))
+
+		samples[0] = gui.Slider(rl.NewRectangle(panelRec.X+float32(gridSpacing), panelRec.Y+float32(gridSpacing*18)+panelScroll.Y, 150, 20), "", "sample", samples[0], 2.0, 8.0)
+		quality[0] = gui.Slider(rl.NewRectangle(panelRec.X+float32(gridSpacing), panelRec.Y+float32(gridSpacing*20)+panelScroll.Y, 150, 20), "", "quality", quality[0], 1.0, 8.0)
 		rl.EndScissorMode()
 
 		rl.BeginTextureMode(target)
