@@ -1,10 +1,6 @@
 package main
 
 import (
-	"fmt"
-	"image/jpeg"
-	"os"
-
 	gui "github.com/gen2brain/raylib-go/raygui"
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
@@ -96,20 +92,20 @@ func main() {
 		rl.BeginShaderMode(shader)
 		rl.DrawTextureRec(target.Texture, rl.NewRectangle(0, 0, float32(target.Texture.Width), float32(-target.Texture.Height)), rl.NewVector2(0, 0), rl.White)
 
-		img := rl.LoadImageFromTexture(target.Texture)
-		myImg := img.ToImage()
-		file, err := os.Create(fmt.Sprintf("./img/img-%d.jpg", cycle))
-		if err != nil {
-			println("error creating file")
-		}
-		defer file.Close()
+		// img := rl.LoadImageFromTexture(target.Texture)
+		// myImg := img.ToImage()
+		// file, err := os.Create(fmt.Sprintf("./img/img-%d.jpg", cycle))
+		// if err != nil {
+		// 	println("error creating file")
+		// }
+		// defer file.Close()
 
-		var opts jpeg.Options
-		opts.Quality = 80
-		err = jpeg.Encode(file, myImg, &opts)
-		if err != nil {
-			println("save error")
-		}
+		// var opts jpeg.Options
+		// opts.Quality = 80
+		// err = jpeg.Encode(file, myImg, &opts)
+		// if err != nil {
+		// 	println("save error")
+		// }
 
 		rl.EndShaderMode()
 
